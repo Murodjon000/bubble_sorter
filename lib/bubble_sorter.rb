@@ -1,9 +1,7 @@
 module BubbleSorter
   def bubble_sort(arr)
-    bubble_loop(arr) do |el, i|
-      if arr[i + 1] && el > arr[i + 1]
-        swap_places(arr, i)
-      end
+    bubble_loop(arr) do |el, idx|
+      swap_places(arr, idx) if arr[idx + 1] && el > arr[idx + 1]
     end
 
     arr
@@ -12,10 +10,10 @@ module BubbleSorter
   def bubble_sort_by(arr)
     return arr.dup unless block_given?
 
-    bubble_loop(arr) do |el, i|
-      if arr[i + 1]
-        computed = yield(arr[i], arr[i + 1])
-        swap_places(arr, i) if computed > 0
+    bubble_loop(arr) do |_el, idx|
+      if arr[idx + 1]
+        computed = yield(arr[idx], arr[idx + 1])
+        swap_places(arr, idx) if computed.positive?
       end
     end
 
@@ -26,11 +24,11 @@ module BubbleSorter
     return arr.dup unless block_given?
 
     arr.length.times do
-      arr.each.with_index { |el, i| yield(el, i) }
+      arr.each.with_index { |el, idx| yield(el, idx) }
     end
   end
 
-  def swap_places(arr, i)
-    arr[i], arr[i + 1] = arr[i + 1], arr[i]
+  def swap_places(arr, idx)
+    arr[idx], arr[idx + 1] = arr[idx + 1], arr[idx]
   end
 end
