@@ -9,6 +9,19 @@ module BubbleSorter
     arr
   end
 
+  def bubble_sort_by(arr)
+    return arr.dup unless block_given?
+
+    bubble_loop(arr) do |el, i|
+      if arr[i + 1]
+        computed = yield(arr[i], arr[i + 1])
+        swap_places(arr, i) if computed > 0
+      end
+    end
+
+    arr
+  end
+
   def bubble_loop(arr)
     return arr.dup unless block_given?
 
