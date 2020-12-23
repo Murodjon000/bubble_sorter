@@ -7,8 +7,6 @@ def bubble_sort(arr)
 end
 
 def bubble_sort_by(arr)
-  return arr.dup unless block_given?
-
   bubble_loop(arr) do |_el, idx|
     if arr[idx + 1]
       computed = yield(arr[idx], arr[idx + 1])
@@ -20,8 +18,6 @@ def bubble_sort_by(arr)
 end
 
 def bubble_loop(arr)
-  return arr.dup unless block_given?
-
   arr.length.times do
     arr.each.with_index { |el, idx| yield(el, idx) }
   end
